@@ -15,10 +15,12 @@ payload = {
     "workflow_id": "7408530827509858313",
     "parameters": {
         "BOT_USER_INPUT": "",
-        "img_url": "https://p9-bot-sign.byteimg.com/tos-cn-i-v4nquku3lp/e409130e18134edd81ac122a2778075e.jpg~tplv-v4nquku3lp-image.image?rk3s=68e6b6b5&x-expires=1727370417&x-signature=ZEU1ESTaUmgmrLpM0rYcAkbxFfE%3D"
+        "img_url": 'https://s2.loli.net/2024/08/30/dBO9cXo5PLHKSF1.png'
     }
 }
-
+print(payload)
 response = requests.post(url, headers=headers, json=payload)
+print("coze："+response.text)
 data = response.json().get("data")
 print(json.loads(data)["data"])
+

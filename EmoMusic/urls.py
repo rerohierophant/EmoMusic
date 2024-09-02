@@ -20,6 +20,5 @@ from coze_app import views
 urlpatterns = [
     path("admin/", admin.site.urls),
     path('', views.index, name='index'),
-    path('get-response/', views.coze_response_view, name='get_coze_response'),
-    path('rsp/', views.get_coze_response, name='get_coze_response'),
+    path('getUrl/', views.img2url, name='get_img_url'),
 ]

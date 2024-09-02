@@ -4,23 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coze Chat</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+            cursor: crosshair;
+            background-color: #FFFFFF;
+        }
+    </style>
 </head>
 <body>
-    <input type="text" id="userQuery" placeholder="Enter your question here">
-    <button id="submitQuery">Submit</button>
-    <img id="hth_img" src="https://p3-bot-sign.byteimg.com/tos-cn-i-v4nquku3lp/1b86717a30ee48f7a982d7d894ead03e.jpg~tplv-v4nquku3lp-image.image?rk3s=68e6b6b5&x-expires=1727531251&x-signature=Ix5TY3K1EL0pIX4gi8kxt9NKkSA%3D">
-    <p id="responseDisplay"></p>
+    <h1>涂鸦板</h1>
+    <canvas id="drawingCanvas" width="800" height="600"></canvas>
+    <input type="text" id="userQuery" placeholder="User Input">
+    <button id="saveImage">上传</button>
 
+    <p id="responseDisplay"></p>
     <script>
-        document.getElementById('submitQuery').onclick = function() {
+        document.getElementById('saveImage').onclick = function() {
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // 创建一个新的canvas，确保不会影响原始canvas上的绘制
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+
+            // 设置临时canvas的尺寸和原始canvas相同
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+
+            // 填充白色背景
+            tempCtx.fillStyle = 'white';
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+            // 将原始canvas的内容绘制到临时canvas上
+            tempCtx.drawImage(canvas, 0, 0);
+
+            // 将临时canvas保存为图片
+            const image = tempCanvas.toDataURL('image/png');
+            const base64Image = image.split(',')[1];
+            console.log(image)
+
             const query = document.getElementById('userQuery').value;
-            const img_url = document.getElementById('hth_img').getAttribute("src")
-            fetch('/get-response/', {
+
+            fetch('/getUrl/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ query: query, img_url: img_url }),
+                body: JSON.stringify({ query: query, img_base64: base64Image }),
             })
             .then(response => response.json())
             .then(data => {
@@ -29,7 +60,45 @@
             .catch(error => {
                 console.error('Error:', error);
             });
+
         }
+    </script>
+
+    <script>
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // 初始化绘图状态
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return; // 如果未按下鼠标，则不进行绘图
+
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDrawing = false;
+        });
+
+        canvas.addEventListener('mouseout', () => {
+            isDrawing = false;
+        });
+
+        // 设置绘图样式
+        ctx.strokeStyle = '#1a1a1a'; // 红色线条
+        ctx.lineWidth = 3; // 线条宽度
     </script>
 </body>
 </html>
