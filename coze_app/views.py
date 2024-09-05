@@ -100,10 +100,12 @@ def htp(request):
         response = requests.post(coze_url, headers=coze_headers, json=payload)
 
         print("\n")
+        print(response)
         print(response.text)
         print("\n")
 
-        if response.status_code != 200:
+        code = json.loads(response.text).get('code')
+        if code != 200:
             selected_element = random.choice(defaults)
             session['result'] = selected_element
             session['status'] = 'done'  # 标记处理状态为完成

@@ -28,8 +28,9 @@
         <!-- 可选：显示发送结果的区域 -->  
         <p id="result"></p> 
 
-        <div class="talkboard" id="talkboard">
-            
+        <div class="talkboard" id="talkboard"></div>
+        <div id="result">
+
         </div>
 
     </div>
@@ -94,9 +95,9 @@
         .then(result => {
             console.log('成功:', result);
             // 获取talkboard div
-            const talkboard = document.getElementById('talkboard');
+            const talkboard_result = document.getElementById('result');
             // 将后端返回的result和user_mood显示在talkboard中
-            talkboard.innerHTML = `<p>${result.result}</p>`;
+            talkboard_result.innerHTML = `${result.result}`;
         });
     }
 </script>

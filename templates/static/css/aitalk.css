@@ -1,8 +1,8 @@
 body {
-  user-select: none;  /* 标准属性 */
-  -webkit-user-select: none;  /* 针对 Safari */
-  -moz-user-select: none;  /* 针对 Firefox */
-  -ms-user-select: none;  /* 针对 Internet Explorer 和 Edge */
+    user-select: none;  /* 标准属性 */
+    -webkit-user-select: none;  /* 针对 Safari */
+    -moz-user-select: none;  /* 针对 Firefox */
+    -ms-user-select: none;  /* 针对 Internet Explorer 和 Edge */
 }
 
 .main_img{
@@ -121,4 +121,21 @@ body {
     top: 82px;
     height: 556px;
     width: 770px;
+}
+
+#result{
+    position: absolute;
+    text-indent: 2em;
+    font-size: 24px;
+    line-height: 31px;
+    word-spacing: 6%;
+    font-family: 'jiangxi';
+    color:#2E2E2E;
+    text-align: justify;
+
+    left: 491px;
+    top: 118px;
+    height: 500px;
+    width: 520px;
+    z-index: 999;
 }
