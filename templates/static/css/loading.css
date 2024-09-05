@@ -1,3 +1,10 @@
+body {
+  user-select: none;  /* 标准属性 */
+  -webkit-user-select: none;  /* 针对 Safari */
+  -moz-user-select: none;  /* 针对 Firefox */
+  -ms-user-select: none;  /* 针对 Internet Explorer 和 Edge */
+}
+
 .main_img{
     display: block;
     position: relative;

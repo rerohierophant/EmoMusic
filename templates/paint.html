@@ -12,23 +12,16 @@
     <div class="main_img">
         <img class="img" src="{% static 'pictures/绘画页.png' %}" alt="">
         <img class="top" src="{% static 'pictures/paint_顶边栏.png' %}" alt="">
-
-        <img class="choosecolor" src="{% static 'pictures/paint_不能选颜色的选颜色.png' %}" alt="">
+        <img class="retreat" id="retreat" src="{% static 'pictures/paint_撤退.png' %}" alt="">
 
         <div class="goback"><a href="{% url 'index' %}" class="aaa"></a></div>
 
         <img src="{% static 'pictures/brush-on.png' %}" alt="Brush" id="brush" class="tool" onclick="toggleTool('brush')">
         <img src="{% static 'pictures/eraser-off.png' %}" alt="Eraser" id="eraser" class="tool" onclick="toggleTool('eraser')">
         <div>
-            <canvas class="drawingCanvas" id="drawingCanvas" width="1193" height="744"></canvas>
+            <canvas class="drawingCanvas" id="drawingCanvas" width="1126" height="717"></canvas>
         </div>
-
-
         <div class="submit" id="saveImage"><a class="aaa2"></a></div>
-
-        <img class="sidetool" src="{% static 'pictures/paint_侧边工具栏.png' %}" alt="">
-        <div class="back"></div>
-        <div class="forward"></div>
 
         <input type="range" id="brushSize" min="1" max="100" value="50" onchange="updateBrushSize()">  
          
@@ -36,39 +29,107 @@
 
     <script>
         function toggleTool(toolId) {
-        const brush = document.getElementById('brush');
-        const eraser = document.getElementById('eraser');
+            const brush = document.getElementById('brush');
+            const eraser = document.getElementById('eraser');
 
-        if (toolId === 'brush') {
-            // 如果画笔当前不是高亮状态，则切换为高亮状态
-            if (!brush.src.includes('on')) {
-                brush.src = '{% static 'pictures/brush-on.png' %}'; // 切换为高亮的画笔图片
-                eraser.src = '{% static 'pictures/eraser-off.png' %}'; // 确保橡皮处于非高亮状态
+            if (toolId === 'brush') {
+                // 如果画笔当前不是高亮状态，则切换为高亮状态
+                if (!brush.src.includes('on')) {
+                    brush.src = '{% static 'pictures/brush-on.png' %}'; // 切换为高亮的画笔图片
+                    eraser.src = '{% static 'pictures/eraser-off.png' %}'; // 确保橡皮处于非高亮状态
+                }
+                // 如果画笔已经是高亮状态，则不做任何操作
+            } else if (toolId === 'eraser') {
+                // 如果橡皮当前不是高亮状态，则切换为高亮状态
+                if (!eraser.src.includes('on')) {
+                    eraser.src = '{% static 'pictures/eraser-on.png' %}'; // 切换为高亮的橡皮图片
+                    brush.src = '{% static 'pictures/brush-off.png' %}'; // 确保画笔处于非高亮状态
+                }
+                // 如果橡皮已经是高亮状态，则不做任何操作
             }
-            // 如果画笔已经是高亮状态，则不做任何操作
-        } else if (toolId === 'eraser') {
-            // 如果橡皮当前不是高亮状态，则切换为高亮状态
-            if (!eraser.src.includes('on')) {
-                eraser.src = '{% static 'pictures/eraser-on.png' %}'; // 切换为高亮的橡皮图片
-                brush.src = '{% static 'pictures/brush-off.png' %}'; // 确保画笔处于非高亮状态
-            }
-            // 如果橡皮已经是高亮状态，则不做任何操作
         }
-    }
     </script>
 
     <script>
         const canvas = document.getElementById('drawingCanvas');
         const ctx = canvas.getContext('2d');
 
+        const brush = document.getElementById('brush');
+        const eraser = document.getElementById('eraser');
+
+        let history = [];  // 用来存储绘制历史
+        let maxHistorySize = 10; // 设置存储历史的最大数量
+
+        const retreatBtn = document.getElementById('retreat');  // 撤销按钮
+
         // 初始化绘图状态
         let isDrawing = false;
         let lastX = 0;
         let lastY = 0;
+        let isEraser = false;  // 标志当前是否是橡皮擦模式
+
+        // 存储当前 canvas 的状态（绘图内容）到 history
+        function saveState() {
+            if (history.length >= 10) {  // 限制存储的历史步数
+                history.shift();  // 超过限制后，删除最早的状态
+            }
+            history.push(canvas.toDataURL());  // 保存当前画布内容
+        }
+
+        // 恢复上一次的绘图状态
+        function restoreState() {
+            if (history.length > 0) {
+                const previousState = history.pop();  // 取出上一步的状态
+                const img = new Image();
+                img.src = previousState;
+                img.onload = function () {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);  // 清空画布
+                    ctx.drawImage(img, 0, 0);  // 恢复到上一步状态
+                }
+            }
+        }
+
+        brush.addEventListener('click', () => {
+            isEraser = false;
+            switchToPen();
+        })
+
+        // 切换到橡皮擦模式
+        eraser.addEventListener('click', () => {
+            isEraser = true;  // 激活橡皮擦模式
+            ctx.strokeStyle = '#ffffff';  // 设置为画布背景颜色（假设背景为白色）
+            ctx.lineWidth = 50;  // 设置橡皮擦的大小
+            updateCursor(ctx.lineWidth);  // 更新光标为橡皮擦样式
+        });
+
+        // 切换回画笔模式
+        function switchToPen() {
+            isEraser = false;
+            ctx.strokeStyle = '#1a1a1a';  // 恢复画笔颜色
+            ctx.lineWidth = 3;
+            canvas.style.cursor = 'crosshair';  // 恢复画笔光标
+        }
+
+        // 动态更新光标样式为圆形，和画笔大小一致
+        function updateCursor(size) {
+            const cursorCanvas = document.createElement('canvas');
+            cursorCanvas.width = size;
+            cursorCanvas.height = size;
+            const cursorCtx = cursorCanvas.getContext('2d');
+
+            cursorCtx.beginPath();
+            cursorCtx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2);  // 绘制圆形光标
+            cursorCtx.fillStyle = 'rgba(0, 0, 0, 0.5)';  // 设置透明度和颜色
+            cursorCtx.fill();
+
+            // 设置自定义光标
+            canvas.style.cursor = `url(${cursorCanvas.toDataURL()}), auto`;
+        }
 
         canvas.addEventListener('mousedown', (e) => {
             isDrawing = true;
             [lastX, lastY] = [e.offsetX, e.offsetY];
+            saveState();  // 开始绘图时保存当前状态
         });
 
         canvas.addEventListener('mousemove', (e) => {
@@ -88,6 +149,9 @@
         canvas.addEventListener('mouseout', () => {
             isDrawing = false;
         });
+
+        // 撤销按钮点击事件
+        retreatBtn.addEventListener('click', restoreState);
 
         // 设置绘图样式
         ctx.strokeStyle = '#1a1a1a'; // 红色线条

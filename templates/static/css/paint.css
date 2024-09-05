@@ -1,3 +1,10 @@
+body {
+  user-select: none;  /* 标准属性 */
+  -webkit-user-select: none;  /* 针对 Safari */
+  -moz-user-select: none;  /* 针对 Firefox */
+  -ms-user-select: none;  /* 针对 Internet Explorer 和 Edge */
+}
+
 .main_img{
     display: block;
     position: relative;
@@ -62,7 +69,7 @@
     width: 126px;
 }
 
-.choosecolor{
+.retreat{
     cursor: pointer;
     position: absolute;
     left: 665.79px;
@@ -93,12 +100,12 @@
     display: block;
     position: absolute;
     background-repeat: no-repeat;
-    background-image: url("../pictures/paint_绘画板_2.png");
-    background-size: 1193px 744px;
-    left: 2px;
+    background-image: url("../pictures/paint_绘画板.png");
+    background-size: 1126px 717px;
+    left: 34px;
     top: 87px;
-    height: 744px;
-    width: 1193px;
+    height: 717px;
+    width: 1126px;
     cursor: crosshair;
 }
 

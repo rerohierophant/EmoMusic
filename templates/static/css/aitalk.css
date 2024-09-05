@@ -1,0 +1,124 @@
+body {
+  user-select: none;  /* 标准属性 */
+  -webkit-user-select: none;  /* 针对 Safari */
+  -moz-user-select: none;  /* 针对 Firefox */
+  -ms-user-select: none;  /* 针对 Internet Explorer 和 Edge */
+}
+
+.main_img{
+    display: block;
+    position: relative;
+    height: 834px;
+    width: 1194px;
+    margin: 0 auto;
+}
+
+.img{
+    position: absolute;
+    width: 100%;
+}
+
+.table{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url("../pictures/aitalk_table.png");
+    background-size: 1194px auto;
+    left: 0px;
+    top: 569px;
+    height: 265px;
+    width: 1194px;
+}
+
+@font-face {
+    font-family: 'jiangxi';
+    src: url(../font/江西拙楷.ttf);
+}
+
+.inputk{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url("../pictures/input框.png");
+    background-size: 851px auto;
+    left: 172px;
+    top: 680px;
+    height: 85px;
+    width: 851px;
+}
+
+#textInput {  
+    position: absolute;
+    cursor: pointer;
+    font-size: 24px;  
+    word-spacing: 0%;
+    font-family: 'jiangxi';
+    color:#3C3432;
+    text-align: justify;
+
+    border: none;
+    outline: none;
+    left: 220px;
+    top: 703px;
+    height: 32px;
+    width: 760px;
+}  
+
+/* 发送按钮样式 */  
+#sendButton {  
+    position: absolute;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-image: url("../pictures/aitalk_发送按钮.png");
+    background-size: 80px auto;
+    left: 917px;
+    top: 697px;
+    height: 52px;
+    width: 80px;
+
+    border: none;
+    outline: none;
+}  
+
+.ipp{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    left: 110px;
+    top: 338px;
+    height: 263.22px;
+    width: 263.22px;
+}
+
+#ip{
+    position: absolute;
+    width: 100%;
+}
+
+#ipname{
+    position: absolute;
+    font-size: 28px;  
+    word-spacing: 6%;
+    font-family: 'jiangxi';
+    color:#3C3432;
+    text-align: justify;
+    left: 200px;
+    top: 242px;
+    height: 32px;
+    width: 88px;
+}
+
+.talkboard{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url("../pictures/对话框.png");
+    background-size: 770px auto;
+    left: 325px;
+    top: 82px;
+    height: 556px;
+    width: 770px;
+}

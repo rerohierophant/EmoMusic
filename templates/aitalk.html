@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/aitalk.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main_img">
+        <img class="img" id="img" src="{% static 'pictures/AI对话底页.png' %}" alt="">
+
+        <div class="ipp">
+            <img id="ip" src="{% static 'pictures/火龙果.png' %}" alt="">
+        </div>
+        
+        <div class="table"></div>
+        <div id="ipname">火龙果</div>
+        <div class="inputk"></div>
+
+        <!-- 输入框 -->  
+        <input type="text" id="textInput" placeholder="向你的专属疗愈师伙伴畅所欲言吧...">  
+  
+        <!-- 发送按钮，注意这里给button加了一个id以便CSS选择器能够定位到它 -->  
+        <button id="sendButton" onclick="sendData()"></button>
+  
+        <!-- 可选：显示发送结果的区域 -->  
+        <p id="result"></p> 
+
+        <div class="talkboard" id="talkboard">
+            
+        </div>
+
+    </div>
+
+<script>
+    function replaceImageSrcBasedOnOutput(output) {
+        // 检查输出是否为 "sad"
+        if (output === "sad") {
+            var image = document.getElementById("ip");
+            if (image) {
+                image.src = "{% static 'pictures/马铃薯.png' %}";
+            }
+        }
+        if (output === "happy") {
+            var image = document.getElementById("ip");
+            if (image) {
+                image.src = "{% static 'pictures/火龙果.png' %}";
+            }
+        }
+        if (output === "think") {
+            var image = document.getElementById("ip");
+            if (image) {
+                image.src = "{% static 'pictures/娃娃菜.png' %}";
+            }
+        }
+        if (output === "anger") {
+            var image = document.getElementById("ip");
+            if (image) {
+                image.src = "{% static 'pictures/青辣椒.png' %}";
+            }
+        }
+        if (output === "fear") {
+            var image = document.getElementById("ip");
+            if (image) {
+                image.src = "{% static 'pictures/胆小菇.png' %}";
+            }
+        }
+    }
+
+    // 假设在某个时刻，你决定调用这个函数并传入 "sad" 作为参数
+    replaceImageSrcBasedOnOutput("{{user_mood}}");
+
+</script>
+
+<script>
+    function sendData() {
+        // 获取输入框中的内容
+        const userInput = document.getElementById('textInput').value;
+
+        // 构造发送的数据
+        const data = { user_query: userInput };
+
+        // 发送POST请求到后端接口
+        fetch('/aitalk_res/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            console.log('成功:', result);
+            // 获取talkboard div
+            const talkboard = document.getElementById('talkboard');
+            // 将后端返回的result和user_mood显示在talkboard中
+            talkboard.innerHTML = `<p>${result.result}</p>`;
+        });
+    }
+</script>
+</body>
+</html>
