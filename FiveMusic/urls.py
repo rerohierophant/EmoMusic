@@ -19,6 +19,15 @@ from coze_app import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+
     path('', views.index, name='index'),
-    path('getUrl/', views.img2url, name='get_img_url'),
+    path('paint/', views.paint, name='paint'),
+    path('loading/', views.loading, name='loading'),
+    path('htp/', views.htp, name='htp'),
+    path('htp_view/', views.htp_view, name='htp_view'),
+
+    path('flower/', views.flower, name='flower'),
+    path('bigscreen/', views.bigscreen, name='bigscreen'),
+
+    path('check_status/', views.check_status, name='check_status')
 ]

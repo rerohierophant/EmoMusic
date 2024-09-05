@@ -48,7 +48,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "EmoMusic.urls"
+ROOT_URLCONF = "FiveMusic.urls"
 
 TEMPLATES = [
     {
@@ -110,8 +110,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
-
+STATIC_URL = "/static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "templates/static",  # 如果有全局静态文件夹
+]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
