@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/flower.css' %}">
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="main_img">
+        <img class="img" id="img" src="{% static 'pictures/香水卡片-忧.png' %}" alt="">
+
+        <div class="submit"><a href="{% url 'bigscreen' %}" class="aaa2"></a></div>
+    </div>
+
+    <script>
+        let output = {{ user_mood }}
+        function replaceImageSrcBasedOnOutput(output) {
+            // 检查输出是否为 "sad"
+            if (output === "sad") {
+                var image = document.getElementById("img");
+                if (image) {
+                    image.src = "{% static 'pictures/香水卡片-忧.png' %}";
+                }
+            }
+            if (output === "happy") {
+                var image = document.getElementById("img");
+                if (image) {
+                    image.src = "{% static 'pictures/香水卡片-喜.png' %}";
+                }
+            }
+            if (output === "think") {
+                var image = document.getElementById("img");
+                if (image) {
+                    image.src = "{% static 'pictures/香水卡片-思.png' %}";
+                }
+            }
+            if (output === "anger") {
+                var image = document.getElementById("img");
+                if (image) {
+                    image.src = "{% static 'pictures/香水卡片-怒.png' %}";
+                }
+            }
+            if (output === "fear") {
+                var image = document.getElementById("img");
+                if (image) {
+                    image.src = "{% static 'pictures/香水卡片-恐.png' %}";
+                }
+            }
+        }
+    </script>
+    
+</body>
+</html>  

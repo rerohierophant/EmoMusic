@@ -1,0 +1,37 @@
+.main_img{
+    display: block;
+    position: relative;
+    height: 834px;
+    width: 1194px;
+    margin: 0 auto;
+}
+
+.img{
+    position: absolute;
+    width: 100%;
+}
+
+@keyframes rotate {  
+    from {  
+        transform: rotate(0deg);  
+    }  
+    to {  
+        transform: rotate(360deg);  
+    }  
+}  
+
+.rotating-container {  
+    position: absolute; /* 设置为相对定位，以便子元素可以相对于它进行定位 */  
+    top: 222px;
+    left: 454px;
+    width: 287px; /* 根据内容调整宽度 */  
+    height: 287px; /* 根据内容调整高度 */  
+    display: block; /* 允许对容器进行居中 */  
+}  
+  
+.rotating-image {  
+    width: 287px; /* 图片宽度，可根据需要调整 */  
+    height: auto; /* 图片高度自动调整以保持比例 */  
+    display: block; /* 消除图片下方的默认间隙 */  
+    animation: rotate 4s linear infinite; /* 旋转动画 */  
+}  

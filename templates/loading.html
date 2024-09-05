@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/loading.css' %}">
+{#    <script src="{% static 'js/loading.js' %}"></script>#}
+    <title>Document</title>
+</head>
+<body>
+    <div class="main_img">
+        <img class="img" src="{% static 'pictures/加载页.png' %}" alt="">
+
+        <div class="rotating-container">  
+            <img src="{% static 'pictures/旋转洋葱.png' %}" alt="Rotating Image" class="rotating-image">
+        </div> 
+    </div>
+
+    <script>
+        function checkProcessingStatus() {
+            fetch('/check_status/')
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'done') {
+                    window.location.href = '/htp_view/';
+                } else {
+                    setTimeout(checkProcessingStatus, 1000);  // 每隔1秒轮询一次
+                }
+            });
+        }
+
+        // 页面加载后开始轮询
+        window.onload = function() {
+            checkProcessingStatus();
+        };
+    </script>
+</body>
+</html>

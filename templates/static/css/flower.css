@@ -1,0 +1,31 @@
+.main_img{
+    display: block;
+    position: relative;
+    height: 834px;
+    width: 1194px;
+    margin: 0 auto;
+}
+
+.img{
+    position: absolute;
+    width: 100%;
+}
+
+.submit{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url("../pictures/继续按钮.png");
+    background-size: 126px auto;
+    left: 1014px;
+    top: 664px;
+    height: 126px;
+    width: 126px;
+}
+
+.aaa2{
+    display: block;
+    height: 126px;
+    width: 126px;
+}

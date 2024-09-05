@@ -1,0 +1,152 @@
+.main_img{
+    display: block;
+    position: relative;
+    height: 834px;
+    width: 1194px;
+    margin: 0 auto;
+}
+
+.img{
+    position: absolute;
+    width: 100%;
+}
+
+.top{
+    position: absolute;
+    height: 83px;
+    width: 300px;
+    left: 447px;
+    top: 0px;
+}
+
+.camera{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url("../pictures/paint_拍照上传.png");
+    background-size: 116px 40px;
+    left: 1033px;
+    top: 24px;
+    height: 40px;
+    width: 116px;
+}
+
+.camera:active{
+    cursor: pointer;
+    background-image: url("../pictures/paint_拍照上传_active.png");
+}
+
+.goback{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url("../pictures/paint_返回.png");
+    background-size: 106px auto;
+    left: 40px;
+    top: 20px;
+    height: 60px;
+    width: 106px;
+}
+
+.aaa{
+    display: block;
+    height: 60px;
+    width: 106px;
+}
+
+.aaa2{
+    display: block;
+    height: 126px;
+    width: 126px;
+}
+
+.choosecolor{
+    cursor: pointer;
+    position: absolute;
+    left: 665.79px;
+    top: 21px;
+    height: 25.44px;
+    width: 25.44px;
+}
+
+#brush{
+    cursor: pointer;
+    position: absolute;
+    height: 28.9px;
+    width: 23.91px;
+    left: 510px;
+    top: 18.78px;
+}
+
+#eraser{
+    cursor: pointer;
+    position: absolute;
+    height: 30.45px;
+    width: 27.1px;
+    left: 587px;
+    top: 19px;
+}
+
+.drawingCanvas{
+    display: block;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url("../pictures/paint_绘画板_2.png");
+    background-size: 1193px 744px;
+    left: 2px;
+    top: 87px;
+    height: 744px;
+    width: 1193px;
+    cursor: crosshair;
+}
+
+.submit{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url("../pictures/paint_绘画提交.png");
+    background-size: 126px auto;
+    left: 1014px;
+    top: 664px;
+    height: 126px;
+    width: 126px;
+}
+
+.sidetool{
+    display: block;
+    position: absolute;
+    height: 540px;
+    width: auto;
+    left: 4px;
+    top: 267px;
+}
+
+.back{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url("../pictures/paint_撤退.png");
+    background-size: 18.46px auto;
+    left: 70px;
+    top: 515px;
+    height: 16px;
+    width: 18.46px;
+}
+
+.forward{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url("../pictures/paint_前进.png");
+    background-size: 18.46px auto;
+    left: 70px;
+    top: 551px;
+    height: 16px;
+    width: 18.46px;
+}
+

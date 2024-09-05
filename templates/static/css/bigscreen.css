@@ -1,0 +1,31 @@
+.main_img{
+    display: block;
+    position: relative;
+    height: 834px;
+    width: 1194px;
+    margin: 0 auto;
+}
+
+.img{
+    position: absolute;
+    width: 100%;
+}
+
+.submit{
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url("../pictures/更多体验按钮.png");
+    background-size: 174px auto;
+    left: 936px;
+    top: 699px;
+    height: 80px;
+    width: 174px;
+}
+
+.aaa2{
+    display: block;
+    height: 73px;
+    width: 174px;
+}

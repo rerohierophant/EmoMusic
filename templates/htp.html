@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/htp.css' %}">
+    <title>Document</title>
+</head>
+<body>
+    <div class="main_img">
+        <img class="img" src="{% static 'pictures/分析结果页.png' %}" alt="">
+        <div class="htp_picture">
+            <img src="{% static 'sketch/uploaded_image.png' %}" alt="" class="user_paint">
+        </div>
+
+        <div id="mental" class="jiangxi">{{ mental_state }}</div>
+        <div id="advice" class="jiangxi">{{ suggestion }}</div>
+
+        <div id="house" class="jiangxi">{{ house_desc }}</div>
+        <div id="tree" class="jiangxi">{{ tree_desc }}</div>
+        <div id="person" class="jiangxi">{{ person_desc}}</div>
+
+
+        <div class="submit"><a href="{% url 'flower' %}" class="aaa2"></a></div>
+    </div>
+
+<script>
+    console.log({{ result }})
+</script>
+</body>
+</html>

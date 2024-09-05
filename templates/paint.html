@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/paint.css' %}">
+
+    <title>Document</title>
+</head>
+<body>
+    <div class="main_img">
+        <img class="img" src="{% static 'pictures/绘画页.png' %}" alt="">
+        <img class="top" src="{% static 'pictures/paint_顶边栏.png' %}" alt="">
+
+        <img class="choosecolor" src="{% static 'pictures/paint_不能选颜色的选颜色.png' %}" alt="">
+
+        <div class="goback"><a href="{% url 'index' %}" class="aaa"></a></div>
+
+        <img src="{% static 'pictures/brush-on.png' %}" alt="Brush" id="brush" class="tool" onclick="toggleTool('brush')">
+        <img src="{% static 'pictures/eraser-off.png' %}" alt="Eraser" id="eraser" class="tool" onclick="toggleTool('eraser')">
+        <div>
+            <canvas class="drawingCanvas" id="drawingCanvas" width="1193" height="744"></canvas>
+        </div>
+
+
+        <div class="submit" id="saveImage"><a class="aaa2"></a></div>
+
+        <img class="sidetool" src="{% static 'pictures/paint_侧边工具栏.png' %}" alt="">
+        <div class="back"></div>
+        <div class="forward"></div>
+
+        <input type="range" id="brushSize" min="1" max="100" value="50" onchange="updateBrushSize()">  
+         
+    </div>
+
+    <script>
+        function toggleTool(toolId) {
+        const brush = document.getElementById('brush');
+        const eraser = document.getElementById('eraser');
+
+        if (toolId === 'brush') {
+            // 如果画笔当前不是高亮状态，则切换为高亮状态
+            if (!brush.src.includes('on')) {
+                brush.src = '{% static 'pictures/brush-on.png' %}'; // 切换为高亮的画笔图片
+                eraser.src = '{% static 'pictures/eraser-off.png' %}'; // 确保橡皮处于非高亮状态
+            }
+            // 如果画笔已经是高亮状态，则不做任何操作
+        } else if (toolId === 'eraser') {
+            // 如果橡皮当前不是高亮状态，则切换为高亮状态
+            if (!eraser.src.includes('on')) {
+                eraser.src = '{% static 'pictures/eraser-on.png' %}'; // 切换为高亮的橡皮图片
+                brush.src = '{% static 'pictures/brush-off.png' %}'; // 确保画笔处于非高亮状态
+            }
+            // 如果橡皮已经是高亮状态，则不做任何操作
+        }
+    }
+    </script>
+
+    <script>
+        const canvas = document.getElementById('drawingCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // 初始化绘图状态
+        let isDrawing = false;
+        let lastX = 0;
+        let lastY = 0;
+
+        canvas.addEventListener('mousedown', (e) => {
+            isDrawing = true;
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isDrawing) return; // 如果未按下鼠标，则不进行绘图
+
+            ctx.beginPath();
+            ctx.moveTo(lastX, lastY);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.stroke();
+            [lastX, lastY] = [e.offsetX, e.offsetY];
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isDrawing = false;
+        });
+
+        canvas.addEventListener('mouseout', () => {
+            isDrawing = false;
+        });
+
+        // 设置绘图样式
+        ctx.strokeStyle = '#1a1a1a'; // 红色线条
+        ctx.lineWidth = 3; // 线条宽度
+    </script>
+
+    <script>
+        document.getElementById('saveImage').onclick = function() {
+            console.log("11")
+            const canvas = document.getElementById('drawingCanvas');
+            const ctx = canvas.getContext('2d');
+
+            // 创建一个新的canvas，确保不会影响原始canvas上的绘制
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+
+            // 设置临时canvas的尺寸和原始canvas相同
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+
+            // 填充白色背景
+            tempCtx.fillStyle = 'white';
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+            // 将原始canvas的内容绘制到临时canvas上
+            tempCtx.drawImage(canvas, 0, 0);
+
+            // 将临时canvas保存为图片
+            const image = tempCanvas.toDataURL('image/png');
+            const base64Image = image.split(',')[1];
+            console.log(image)
+
+            fetch('/htp/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ img_base64: base64Image }),
+            })
+            window.location.href = '{% url "loading" %}';
+        }
+    </script>
+</body>
+</html>
